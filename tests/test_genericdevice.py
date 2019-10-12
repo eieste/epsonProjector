@@ -5,9 +5,7 @@ from epsonprojector.interfaces.generic import GenericInterface
 from epsonprojector.exception import *
 
 
-class GenericInterfaceTest(unittest.TestCase):
-
-    # @mock.patch('epsonprojector.interfaces.generic.GenericInterface.has_device', return_value=True)
+class GenericDeviceTest(unittest.TestCase):
 
     def test_unknown_device(self):
         with self.assertRaises(UnknownDeviceError) as context:

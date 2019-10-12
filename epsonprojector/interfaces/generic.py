@@ -2,7 +2,7 @@ from epsonprojector.devices import GenericDevice, EpsonDevice
 from epsonprojector.exception import UnknownDeviceError, ConnectionInUseError, NotADeviceError
 
 
-class GenericInterface:
+class GenericInterface(object):
 
     DEVICES = {
         "generic": GenericDevice,
@@ -10,10 +10,6 @@ class GenericInterface:
     }
 
     CONNECTIONS = {}
-
-    def __init__(self, device_object, *args, **kwargs):
-        if not isinstance(device_object, GenericDevice):
-            raise NotADeviceError("device_object is not a sublcass from GenericDevice class")
 
     @staticmethod
     def new_device_connection(device_name="generic", *args, **kwargs):
@@ -29,10 +25,13 @@ class GenericInterface:
         if GenericInterface.has_connection(*args, **kwargs):
             raise ConnectionInUseError(f"A connection with the given Parameters is already in use. Please use get_device_connection method")
 
-        serial_interface = GenericInterface(*args, **kwargs)
         dev_class = GenericInterface.DEVICES[device_name]
+
+        serial_interface = GenericInterface(*args, **kwargs)
+
         dev_obj = dev_class(serial_interface)
         GenericInterface.create_new_connection(dev_obj, *args, **kwargs)
+
         return dev_obj
 
     @classmethod

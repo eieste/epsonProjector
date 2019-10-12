@@ -6,7 +6,6 @@ from epsonprojector.interfaces.generic import GenericDevice
 class SerialInterface(GenericDevice):
 
     DEVICES = {
-        "generic": GenericDevice,
         "epson_device": EpsonDevice,
         "tw5200": EpsonTW5200Device
     }
