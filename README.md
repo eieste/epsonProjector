@@ -1,2 +1,2 @@
-# Epson TW5200 RS232 Steuerung
+# Epson Projector RS232 Steuerung
 
