@@ -1,5 +1,5 @@
-from epsonprojector.devices import EpsonDevice
-import enum
+from epsonprojector.devices.epson import EpsonDevice
+
 
 class EpsonTW5200Device(EpsonDevice):
 

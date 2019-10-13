@@ -1,38 +1,62 @@
-import yaml
 import os
-from epsonprojector.settings import conf
+
+import yaml
 from jsonschema import validate
+
+from epsonprojector.settings import conf
 
 
 class LoadConfiguration:
 
-    _SCHEMA = None
+    _schema = None
 
     def __init__(self, device):
         self._device = device
 
-        if self._SCHEMA is None:
+        if self._schema is None:
             # Load Schema
-            with open(os.path.join(conf.DEVICE_CONFIGURATIONS_PATH, "schema.yaml"), "r") as fobj:
-                self._SCHEMA = yaml.load(fobj.read(), Loader=yaml.SafeLoader)
+                self._schema = self._read_schema()
 
-        self.autload_config()
+        self._data = self.autload_config()
 
+    def get_config(self):
+        return self._data
 
-    def autload_config(self):
+    def _get_schema(self):
+        return self._schema
+
+    def _read_schema(self):
+        schema = {}
+        with open(os.path.join(conf.DEVICE_CONFIGURATIONS_PATH, "schema.yaml"), "r") as fobj:
+            schema = yaml.load(fobj.read(), Loader=yaml.SafeLoader)
+        return schema
+
+    def _read_config(self):
+        config = {}
         with open(os.path.join(conf.DEVICE_CONFIGURATIONS_PATH, self._device.get_config_file()), "r") as fobj:
             config = yaml.load(fobj.read(), Loader=yaml.SafeLoader)
-            validate(instance=config, schema=self._SCHEMA)
-            self._data = config
+        return config
+
+    def autload_config(self):
+        data = self._read_config()
+        validate(instance=data, schema=self._get_schema())
+        return data
 
     def find_command(self, command):
-        print(self._data)
-        for item in self._data["commands"]:
-            if item["command"] == command or item["name"] == command:
-                return item
+        for item in self.get_config()["commands"]:
+            if "command" in item:
+                if item["command"].lower() == command.lower():
+                    return item
+            if "name" in item:
+                if item["name"].lower() == command.lower():
+                    return item
 
     def find_parameter(self, command_item, parameter):
         for item in command_item:
-            print(item)
-            if item["parameter"] == parameter or item["name"] == parameter:
-                return item
+            if "parameter" in item:
+                if item["parameter"].lower() == parameter.lower():
+                    return item
+
+            if "name" in item:
+                if item["name"].lower() == parameter.lower():
+                    return item

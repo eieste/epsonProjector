@@ -1,5 +1,5 @@
 from epsonprojector.devices import GenericDevice, EpsonDevice
-from epsonprojector.exception import UnknownDeviceError, ConnectionInUseError, NotADeviceError
+from epsonprojector.exception import UnknownDeviceError, ConnectionInUseError
 
 
 class GenericInterface(object):

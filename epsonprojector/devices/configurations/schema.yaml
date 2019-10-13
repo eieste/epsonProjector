@@ -1,100 +1,63 @@
-definitions: {}
 $schema: http://json-schema.org/draft-07/schema#
-$id: http://example.com/root.json
 type: object
-title: The Root Schema
+title: Projector Configuration Schema
+additionalProperties: false
 required:
 - commands
 properties:
   commands:
     $id: '#/properties/commands'
     type: array
+    items: { "$ref": "#/definitions/command" }
+    uniqueItems: true
+    minItems: 1
     title: Command List
     required:
     - command
+definitions:
+  parameter:
+    type: object
+    title: Parameter
+    properties:
+      parameter:
+        type: string
+        description: Machine Value
+      name:
+        type: string
+        description: Alternative Code Value
+        pattern: ^([\w_-])+$
+      display_name:
+        type: string
+        description: Human readable Value
+
+  command:
+    type: object
+    title: Command
+    required:
+    - command
+    - request_parameters
+    - response_parameters
     properties:
       command:
-        $id: '#/properties/commands/properties/command'
-        type: object
-        title: Command
-        required:
-        - name
-        - command
-        - request_parameters
-        - response_parameters
-        properties:
-          command:
-            $id: '#/properties/commands/properties/command/properties/name'
-            type: string
-            title: Slug
-            description: Slug for Command
-            pattern: ^([a-z-_]+)$
-          name:
-            $id: '#/properties/commands/properties/command/properties/name'
-            type: string
-            title: command
-            description: Command that sand to beamer
-            pattern: ^([A-Z]+)$
-          display_name:
-            $id: '#/properties/commands/properties/command/properties/display_name'
-            type: string
-            title: Display Name
-            description: User friendly Name of Command
-          request_parameters:
-            $id: '#/properties/commands/properties/command/properties/request_parameters'
-            type: array
-            title: Request Parameters
-            description: This Parameters can be send to Device
-            items:
-              $id: '#/properties/commands/properties/command/properties/request_parameters/items'
-              type: object
-              title: Parameter
-              required:
-              - parameter
-              - name
-              properties:
-                parameter:
-                  $id: '#/properties/commands/properties/command/properties/request_parameters/items/properties/parameter'
-                  type: string
-                  title: Parameter Value
-                  description: Machine Value
-                  pattern: ^(.*)$
-                name:
-                  $id: '#/properties/commands/properties/command/properties/request_parameters/items/properties/name'
-                  type: string
-                  title: Slug
-                  description: Slug for Parameter
-                  default: ''
-                  pattern: ^([a-z-_])$
-                display_name:
-                  $id: '#/properties/commands/properties/command/properties/request_parameters/items/properties/display_name'
-                  type: string
-                  title: Display Parameter Name
-                  description: User friendly Name of this Parameter
-          response_parameters:
-            $id: '#/properties/commands/properties/command/properties/response_parameters'
-            type: array
-            title: The Response_parameters Schema
-            items:
-              $id: '#/properties/commands/properties/command/properties/response_parameters/items'
-              type: object
-              title: The Items Schema
-              required:
-              - parameter
-              - name
-              properties:
-                parameter:
-                  $id: '#/properties/commands/properties/command/properties/response_parameters/items/properties/parameter'
-                  type: integer
-                  title: Parameter Value
-                  description: Machine Value
-                name:
-                  $id: '#/properties/commands/properties/command/properties/response_parameters/items/properties/name'
-                  type: string
-                  title: Slug
-                  description: Slug for Parameter
-                display_name:
-                  $id: '#/properties/commands/properties/command/properties/response_parameters/items/properties/display_name'
-                  type: string
-                  title: Display Parameter Name
-                  description: User friendly Name of this Parameter
+        type: string
+        title: Slug
+        description: Slug for Command
+      name:
+        type: string
+        title: command
+        description: Command to send to a projector
+        pattern: ^([\w_-])+$
+      display_name:
+        type: string
+        title: Display Name
+        description: User friendly Name of Command
+      request_parameters:
+        type: array
+        title: Request Parameters
+        description: This Parameters can be send to Device
+        items: { "$ref": "#/definitions/parameter" }
+      response_parameters:
+        type: array
+        title: Response Parameters
+        description: The Response_parameters Schema
+        items: { "$ref": "#/definitions/parameter" }

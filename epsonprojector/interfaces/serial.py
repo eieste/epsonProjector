@@ -1,9 +1,9 @@
-from epsonprojector.devices import GenericDevice, EpsonDevice, EpsonTW5200Device
+from epsonprojector.devices import EpsonDevice, EpsonTW5200Device
 from epsonprojector.exception import UnknownDeviceError, ConnectionInUseError
-from epsonprojector.interfaces.generic import GenericDevice
+from epsonprojector.interfaces.generic import GenericInterface
+import serial
 
-
-class SerialInterface(GenericDevice):
+class SerialInterface(GenericInterface):
 
     DEVICES = {
         "epson_device": EpsonDevice,
@@ -14,7 +14,8 @@ class SerialInterface(GenericDevice):
     }
 
     def __init__(self, tty):
-        pass
+        self._tty = tty
+        self._conn = serial.Serial(self._tty, 9600, timeout=5)
 
     @staticmethod
     def new_device_connection(device_name="generic", tty="/dev/ttyUSB0"):
@@ -45,6 +46,7 @@ class SerialInterface(GenericDevice):
             return True
         return False
 
-
     def send_command(self, command):
-        return "foo"
+        self._conn.write(f"{command}\r".encode("UTF-8"))
+        line = self._conn.readline()
+        return line

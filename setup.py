@@ -6,6 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="epsonprojector",
     version="0.0.1",
+    license='MIT',
     author="Stefan Eiermann",
     author_email="python-org@ultraapp.de",
     description="This library helps to control Epson projectors using the RS232 interface.",
@@ -19,6 +20,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.7',
+    include_package_data=True,
     install_requires=[
         'jsonschema',
         'pyaml'
