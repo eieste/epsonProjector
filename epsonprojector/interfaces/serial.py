@@ -3,6 +3,7 @@ from epsonprojector.exception import UnknownDeviceError, ConnectionInUseError
 from epsonprojector.interfaces.generic import GenericInterface
 import serial
 
+
 class SerialInterface(GenericInterface):
 
     DEVICES = {

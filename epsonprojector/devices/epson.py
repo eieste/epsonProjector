@@ -11,6 +11,7 @@ class EpsonDevice(GenericDevice):
     def __getattr__(self, item):
         """
             Overwrites GenericDevice __getattr_ method to implement _status methods
+
             :param item: Name of called method
             :return method: Return a wrapper method
         """

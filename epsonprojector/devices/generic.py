@@ -22,6 +22,7 @@ class GenericDevice:
     def __getattr__(self, item):
         """
             Intercept all method calls to implement them on projector commands
+
             :param item: Name of called method
             :return method: Return a wrapper method
         """
@@ -45,6 +46,7 @@ class GenericDevice:
     def build_command(self, command, parameter):
         """
             Creates a command from Command and Parameter object
+
             :param command: dict of command information from config
             :param parameter: dict of parameter informations from config
             :return any: Command to send via Interface
@@ -54,6 +56,7 @@ class GenericDevice:
     def parse_command(self, command, parameter, *args, **kwargs):
         """
             Try to parse responses from Projector
+
             :param answer: Data that returned from projector
             :return ParsedResponse: Tuple with the parsed Information
         """
@@ -62,6 +65,7 @@ class GenericDevice:
     def get_config_file(self):
         """
             Get path to configfile
+
             :return path: String path to configfile
         """
         return self.config_file
@@ -79,6 +83,7 @@ class GenericDevice:
     def send(self, command):
         """
             Send command via Initialized Interface
+
             :param command: Projector Command
             :return: Parsed Projector answer
         """

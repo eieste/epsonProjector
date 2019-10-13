@@ -14,10 +14,11 @@ class GenericInterface(object):
     @staticmethod
     def new_device_connection(device_name="generic", *args, **kwargs):
         """
-        Create a new Connection to the given device
-        :param device_name: name of available device (All devices can be found in each Interface in Interface.DEVICES
-        :param tty: name of serial interface
-        :return obj: Specific Device object. (origin object of GenericDevice)
+            Create a new Connection to the given device
+
+            :param device_name: name of available device (All devices can be found in each Interface in Interface.DEVICES
+            :param tty: name of serial interface
+            :return obj: Specific Device object. (origin object of GenericDevice)
         """
         if not GenericInterface.has_device(device_name):
             raise UnknownDeviceError(f"Your {device_name} device is not a known device")
@@ -38,6 +39,7 @@ class GenericInterface(object):
     def has_device(cls, device_name):
         """
             Checks if device exists in current interface
+
             :param device_name: name of device
             :return:
         """
@@ -49,6 +51,7 @@ class GenericInterface(object):
     def create_new_connection(cls, device_object, *args, **kwargs):
         """
             Add the given connection to global index, to prevent multiple connections to the same device
+
             :param device_object: Device object
             :param args: Possible args to generate connection identification
             :param kwargs: Possible kwargs to generate connection identification
@@ -61,6 +64,7 @@ class GenericInterface(object):
     def has_connection(cls, *args, **kwargs):
         """
             Check if connection with identifier already exists
+
             :param args: Possible args to generate a identifier
             :param kwargs: Possible kwargs to generate a identifier
             :return:
@@ -68,4 +72,11 @@ class GenericInterface(object):
         raise NotImplementedError("Please implement this method in your interface class")
 
     def send_command(self, *args, **kwargs):
+        """
+            FooBar
+
+            :param args:
+            :param kwargs:
+            :return:
+        """
         raise NotImplementedError("please implement this method in your interface class")
