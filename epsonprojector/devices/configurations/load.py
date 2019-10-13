@@ -1,4 +1,3 @@
-from cerberus import Validator
 import yaml
 import os
 from epsonprojector.settings import conf
