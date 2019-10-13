@@ -37,6 +37,7 @@ class GenericDevice:
             command = self.build_command(cmd, parameter)
             if command is False:
                 raise ValueError("Cant build command")
+
             # Transmit Projector Command
             answer = self.send(command)
             return answer

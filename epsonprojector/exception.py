@@ -8,3 +8,6 @@ class ConnectionInUseError(ConnectionError):
 
 class NotADeviceError(ReferenceError):
     pass
+
+class UnknownResponse(ValueError):
+    pass

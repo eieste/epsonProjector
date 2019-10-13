@@ -29,8 +29,8 @@ class GenericInterface(object):
         if cls.has_connection(*actx, **kwctx):
             raise ConnectionInUseError(f"A connection with the given Parameters is already in use. Please use get_device_connection method")
 
-
         serial_interface = cls(*actx, **kwctx)
+
         dev_obj = dev_class(serial_interface)
         cls.create_new_connection(dev_obj, *actx, **kwctx)
 

@@ -1,7 +1,7 @@
 from epsonprojector.devices.generic import GenericDevice
 import re
 from epsonprojector.devices.generic import ParsedResponse
-
+from epsonprojector.exception import UnknownResponse
 response_re = re.compile(r'(?P<cmd>\w+)\=(?P<param>\w*)\s?')
 
 
@@ -25,9 +25,13 @@ class EpsonDevice(GenericDevice):
                 if command is False:
                     raise ValueError("Cant build command")
                 answer = self.send(command)
-                a = cmd["response_parameters"]
+
                 if answer.status:
+
+                    a = cmd["response_parameters"]
                     aw = self._conf.find_parameter(a, answer.parameter)
+                    if aw is None:
+                        raise UnknownResponse(f"'{answer}' is a unknown Device Response")
                     return aw
                 return "WTF?"
             return status_command
@@ -43,7 +47,7 @@ class EpsonDevice(GenericDevice):
     def parse_command(self, answer, *args, **kwargs):
         aw = answer.decode("UTF-8")
 
-        if "err" in aw:
+        if "err" in aw.lower():
             return ParsedResponse(None, None, False)
 
         if ":" == aw:
