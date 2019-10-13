@@ -6,7 +6,7 @@ install:
   - python setup.py install
 script:
   - python -m unittest
-  - coverage run --source epsonprojector tests
+  - coverage run --source epsonprojector setup.py test
 
 after_success:
     coveralls
