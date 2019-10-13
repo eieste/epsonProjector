@@ -7,6 +7,7 @@ response_re = re.compile(r'(?P<cmd>\w+)\=(?P<param>\w*)\s?')
 
 class EpsonDevice(GenericDevice):
     config_file = "epson.yaml"
+    DEFAULT_TTY = "/dev/ttyUSB0"
 
     def __getattr__(self, item):
         """
